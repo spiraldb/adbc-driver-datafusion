@@ -27,6 +27,7 @@ use arrow_array::types::Int32Type;
 use arrow_array::{ArrayRef, Int32Array, RecordBatch};
 use datafusion::prelude::*;
 use std::error::Error as StdError;
+use std::io::Error as IoError;
 use std::sync::Arc;
 
 use adbc_core::options::{OptionConnection, OptionDatabase, OptionStatement, OptionValue};
@@ -96,11 +97,7 @@ fn try_execute_sql_query(
     let schema = match batches.first() {
         Some(batch) => batch.schema(),
         None => {
-            return Err(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "query returned no batches",
-            )
-            .into());
+            return Err(IoError::other("query returned no batches").into());
         }
     };
 
@@ -201,11 +198,7 @@ fn test_unconsumed_unknown_database_option_still_errors() -> Result<(), Box<dyn 
 
     let err = match result {
         Ok(_) => {
-            return Err(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "expected unconsumed database option to fail",
-            )
-            .into());
+            return Err(IoError::other("expected unconsumed database option to fail").into());
         }
         Err(err) => err,
     };
@@ -226,11 +219,9 @@ fn test_context_init_failure_maps_to_adbc_error() -> Result<(), Box<dyn StdError
 
     let err = match result {
         Ok(_) => {
-            return Err(std::io::Error::new(
-                std::io::ErrorKind::Other,
-                "expected context init failure to fail database creation",
-            )
-            .into());
+            return Err(
+                IoError::other("expected context init failure to fail database creation").into(),
+            );
         }
         Err(err) => err,
     };

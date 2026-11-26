@@ -30,22 +30,22 @@ edition = "2024"
 [dependencies]
 adbc_core = "0.25.0"
 adbc_ffi = { version = "0.25.0", optional = true }
-arrow-array = "59.3"
-arrow-buffer = "59.3"
-arrow-schema = "59.3"
-arrow-select = "59.3"
+arrow-array = "60.1"
+arrow-buffer = "60.1"
+arrow-schema = "60.1"
+arrow-select = "60.1"
 async-trait = "0.1"
 aws-config = "1.8"
 aws-credential-types = "1.2"
-datafusion = { version = "55.2", default-features = false, features = ["avro", "compression", "crypto_expressions", "datetime_expressions", "nested_expressions", "parquet", "recursive_protection", "regex_expressions", "sql", "unicode_expressions"] }
-datafusion-proto = { version = "55.2", default-features = false }
-datafusion-substrait = { version = "55.2", default-features = false, optional = true }
-driverbase = { git = "https://github.com/adbc-drivers/driverbase-rs.git" }
+datafusion = { version = "56.0", default-features = false, features = ["avro", "compression", "crypto_expressions", "datetime_expressions", "nested_expressions", "parquet", "recursive_protection", "regex_expressions", "sql", "unicode_expressions"] }
+datafusion-proto = { version = "56.0", default-features = false }
+datafusion-substrait = { version = "56.0", default-features = false, optional = true }
+driverbase = { git = "https://github.com/adbc-drivers/driverbase-rs.git", rev = "f9e8c11ee3e19bff07e5ef0f444793334e857478" }
 futures = "0.3.32"
 log = "0.4"
 lru = "0.19"
-object_store = { version = "0.13", features = ["aws", "gcp", "http"] }
-parking_lot = "0.12"
+object_store = { version = "0.14.2", features = ["aws", "gcp", "http"] }
+parking_lot = "0.13"
 prost = { version = "0.14.3", optional = true }
 regex = "1"
 tokio = { version = "1.49", features = ["rt-multi-thread"] }

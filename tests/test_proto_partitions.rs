@@ -154,7 +154,7 @@ impl TableProvider for CustomProvider {
     async fn scan(
         &self,
         _state: &dyn Session,
-        _projection: Option<&Vec<usize>>,
+        _projection: Option<&[usize]>,
         _filters: &[Expr],
         _limit: Option<usize>,
     ) -> DFResult<Arc<dyn ExecutionPlan>> {
@@ -182,8 +182,10 @@ impl PhysicalExtensionCodec for CustomCodec {
         }
         let partitions = u64::from_le_bytes(buf[0..8].try_into().unwrap()) as usize;
         let data: Vec<i32> = buf[8..]
-            .chunks_exact(4)
-            .map(|c| i32::from_le_bytes(c.try_into().unwrap()))
+            .as_chunks::<4>()
+            .0
+            .iter()
+            .map(|c| i32::from_le_bytes(*c))
             .collect();
         Ok(Arc::new(CustomExec::new(data, partitions)))
     }
