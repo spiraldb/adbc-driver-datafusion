@@ -9,7 +9,6 @@ dependencies = [
  "adbc_core",
  "adbc_ffi",
  "arrow-array",
- "arrow-buffer",
  "arrow-schema",
  "arrow-select",
  "async-trait",
